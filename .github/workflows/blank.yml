@@ -1,0 +1,31 @@
+name: Update USAspending Data
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Download Assistance Listings CSV
+        run: |
+          mkdir -p data
+          curl -L "https://files.usaspending.gov/reference_data/assistance_listings.csv" -o data/assistance_listings.csv
+
+      - name: Commit updated data
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add data/assistance_listings.csv
+          git commit -m "Update USAspending data" || echo "No changes to commit"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
