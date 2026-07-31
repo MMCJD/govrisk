@@ -1,4 +1,4 @@
-name: Update USAspending Data
+name: update_usaspending.yml
 
 on:
   schedule:
