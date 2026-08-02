@@ -1,0 +1,24 @@
+name: Build Vendor Folder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Composer
+        run: sudo apt-get update && sudo apt-get install -y composer
+
+      - name: Require Smalot PDFParser
+        run: composer require smalot/pdfparser
+
+      - name: Upload vendor folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: vendor
+          path: vendor/
