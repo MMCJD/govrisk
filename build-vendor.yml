@@ -1,5 +1,3 @@
-.github/workflows/build-vendor.yml
-
 name: Build Vendor Folder
 
 on:
